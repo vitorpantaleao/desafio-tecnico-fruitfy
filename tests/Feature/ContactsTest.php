@@ -6,9 +6,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
+use Inertia\Testing\AssertableInertia as Assert;
 
 class CreateContactsTest extends TestCase
 {
+    use RefreshDatabase;
+
     #[Test]
     public function it_should_be_able_to_create_a_new_contact(): void
     {
@@ -20,7 +23,7 @@ class CreateContactsTest extends TestCase
 
         $response = $this->post('/contacts', $data);
 
-        $response->assertStatus(200);
+        $response->assertRedirect('/contacts');
 
 
         $expected = $data;
@@ -58,13 +61,11 @@ class CreateContactsTest extends TestCase
 
         $response->assertStatus(200);
 
-        $response->assertViewIs('contacts.index');
-
-        $response->assertViewHas('contacts');
-
-        $contacts = $response->viewData('contacts');
-
-        $this->assertCount(10, $contacts);
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('Contacts/Index')
+            ->has('contacts')
+            ->has('contacts.data', 10)
+        );
     }
 
     #[Test]
@@ -74,7 +75,7 @@ class CreateContactsTest extends TestCase
 
         $response = $this->delete("/contacts/{$contact->id}");
 
-        $response->assertStatus(200);
+        $response->assertRedirect('/contacts');
 
         $this->assertDatabaseMissing('contacts', $contact->toArray());
     }
@@ -112,7 +113,7 @@ class CreateContactsTest extends TestCase
 
         $response = $this->put("/contacts/{$contact->id}", $data);
 
-        $response->assertStatus(200);
+        $response->assertRedirect('/contacts');
 
         $expected = $data;
 
