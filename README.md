@@ -17,7 +17,7 @@ Front-end Assessment: [✅] Implement a front-end using Inertia.js, Vue3 and Tai
 7. After the test is complete, create a repository on github, and upload your resolution to the repository
 8. Send the repository link to WhatsApp +55 41 98702-5814
 
-==================================== FIM DAS INSTRUÇÕES ====================================
+================== FIM DAS INSTRUÇÕES DO DESAFIO ========================
 
 # Instruções Completas para o Avaliador
 
