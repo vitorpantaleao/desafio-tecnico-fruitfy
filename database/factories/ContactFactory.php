@@ -19,7 +19,7 @@ class ContactFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
-            'phone' => $this->faker->phoneNumber,
+            'phone' => preg_replace('/\D/', '', $this->faker->phoneNumber),
         ];
     }
 }
